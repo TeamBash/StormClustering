@@ -2,8 +2,6 @@ language: java
 branches:
   only:
     - master
-    - Develop
-    - release/release-5-storm-clustering
 
 notifications:
   slack: teambash-iu:Kumv5imwDciZcFQ2KvvUHIje
@@ -32,7 +30,7 @@ deploy:
     acl: public_read
     detect_encoding: true
     on:
-      branch: release/release-5-storm-clustering
+      branch: master
 
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
@@ -44,4 +42,4 @@ deploy:
     deployment_group: TeamBash-App
     region: us-west-2
     on:
-      branch: release/release-5-storm-clustering
+      branch: master
