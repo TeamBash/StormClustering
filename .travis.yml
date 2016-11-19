@@ -1,4 +1,5 @@
 language: java
+
 branches:
   only:
     - develop
@@ -8,13 +9,17 @@ notifications:
 
 jdk:
   - oraclejdk8
+
 sudo: false
+
 install: true
 
 script: cd "core/java/stormClustering/" && mvn clean install
 
-before_deploy:
+after_success:
   - cd ../../../
+
+before_deploy:
   - zip -r TeamBash_stormClustering_test.zip core/java/stormClustering scripts appspec.yml Dockerfile || true
   - mkdir -p "stormClustering_upload"
   - mv TeamBash_stormClustering_test.zip stormClustering_upload/TeamBash_stormClustering_test.zip || true
@@ -32,6 +37,30 @@ deploy:
     on:
       branch: develop
 
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: sga-teambash-test2
+    local_dir: stormClustering_upload
+    region: us-east-2
+    skip_cleanup: true
+    acl: public_read
+    detect_encoding: true
+    on:
+      branch: develop
+
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: sga-teambash-test3
+    local_dir: stormClustering_upload
+    region: us-west-1
+    skip_cleanup: true
+    acl: public_read
+    detect_encoding: true
+    on:
+      branch: develop
+
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
     secret_access_key: $AWS_SECRET_KEY
@@ -41,5 +70,29 @@ deploy:
     application: TeamBash-Test
     deployment_group: TeamBash-Test
     region: us-west-2
+    on:
+      branch: develop
+
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: sga-teambash-test2
+    key: TeamBash_stormClustering_test.zip
+    bundle_type: zip
+    application: TeamBash-Test2
+    deployment_group: TeamBash-Test2
+    region: us-east-2
+    on:
+      branch: develop
+
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: sga-teambash-test3
+    key: TeamBash_stormClustering_test.zip
+    bundle_type: zip
+    application: TeamBash-Test3
+    deployment_group: TeamBash-Test3
+    region: us-west-1
     on:
       branch: develop
