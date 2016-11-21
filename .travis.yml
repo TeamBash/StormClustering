@@ -28,18 +28,6 @@ deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
     secret_access_key: $AWS_SECRET_KEY
-    bucket: sga-teambash-test
-    local_dir: stormClustering_upload
-    region: us-west-2
-    skip_cleanup: true
-    acl: public_read
-    detect_encoding: true
-    on:
-      branch: develop
-
-  - provider: s3
-    access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
-    secret_access_key: $AWS_SECRET_KEY
     bucket: sga-teambash-test2
     local_dir: stormClustering_upload
     region: us-east-2
@@ -58,18 +46,6 @@ deploy:
     skip_cleanup: true
     acl: public_read
     detect_encoding: true
-    on:
-      branch: develop
-
-  - provider: codedeploy
-    access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
-    secret_access_key: $AWS_SECRET_KEY
-    bucket: sga-teambash-test
-    key: TeamBash_stormClustering_test.zip
-    bundle_type: zip
-    application: TeamBash-Test
-    deployment_group: TeamBash-Test
-    region: us-west-2
     on:
       branch: develop
 
