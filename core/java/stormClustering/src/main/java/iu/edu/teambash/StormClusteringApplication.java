@@ -5,6 +5,8 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import iu.edu.teambash.resources.StormClusteringResource;
 
+import javax.servlet.ServletException;
+
 public class StormClusteringApplication extends Application<StormClusteringConfiguration> {
 
     public static void main(final String[] args) throws Exception {
@@ -23,7 +25,8 @@ public class StormClusteringApplication extends Application<StormClusteringConfi
 
     @Override
     public void run(final StormClusteringConfiguration configuration,
-                    final Environment environment) {
+                    final Environment environment) throws ServletException {
+        configuration.init();
         final StormClusteringResource clusteringResource = new StormClusteringResource();
         environment.jersey().register(clusteringResource);
     }
