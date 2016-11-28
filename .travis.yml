@@ -22,7 +22,7 @@ after_success:
 before_deploy:
   - zip -r TeamBash_stormClustering_test.zip core/java/stormClustering scripts appspec.yml Dockerfile || true
   - mkdir -p "stormClustering_upload"
-  - mv mv TeamBash_stormClustering_test.zip stormClustering_upload/TeamBash_stormClustering_test.zip || true
+  - mv TeamBash_stormClustering_test.zip stormClustering_upload/TeamBash_stormClustering_test.zip || true
 
 deploy:
   - provider: s3
