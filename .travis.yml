@@ -2,7 +2,7 @@ language: java
 
 branches:
   only:
-    - develop
+    - master
 
 notifications:
   slack: teambash-iu:Kumv5imwDciZcFQ2KvvUHIje
@@ -22,7 +22,7 @@ after_success:
 before_deploy:
   - zip -r TeamBash_stormClustering_test.zip core/java/stormClustering scripts appspec.yml Dockerfile || true
   - mkdir -p "stormClustering_upload"
-  - mv TeamBash_stormClustering_test.zip stormClustering_upload/TeamBash_stormClustering_test.zip || true
+  - mv TeamBash_stormClustering.zip stormClustering_upload/TeamBash_stormClustering.zip || true
 
 deploy:
   - provider: s3
@@ -47,7 +47,7 @@ deploy:
     acl: public_read
     detect_encoding: true
     on:
-      branch: develop
+      branch: master
 
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
@@ -59,7 +59,7 @@ deploy:
     deployment_group: TeamBash-Test2
     region: us-east-2
     on:
-      branch: develop
+      branch: master
 
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
@@ -71,7 +71,7 @@ deploy:
     deployment_group: TeamBash-Test4
     region: us-east-2
     on:
-      branch: develop
+      branch: master
 
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
@@ -83,4 +83,4 @@ deploy:
     deployment_group: TeamBash-Test3
     region: us-west-1
     on:
-      branch: develop
+      branch: master
