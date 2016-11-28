@@ -35,7 +35,7 @@ deploy:
     acl: public_read
     detect_encoding: true
     on:
-      branch: develop
+      branch: master
 
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
